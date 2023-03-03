@@ -13,7 +13,7 @@ Teams.init({
     primaryKey: true,
     type: INTEGER,
   },
-  title: {
+  teamName: {
     allowNull: false,
     type: STRING,
   },

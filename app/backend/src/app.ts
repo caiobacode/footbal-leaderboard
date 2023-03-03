@@ -1,4 +1,6 @@
 import * as express from 'express';
+import TeamsController from './controllers/TeamsController';
+import TeamsService from './services/TeamsService';
 
 class App {
   public app: express.Express;
@@ -22,6 +24,15 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
+    this.app.get('/teste', (req, res) => res.json({ oi: 'tchau' }));
+
+    // Teams
+    const ServiceTeams = new TeamsService();
+    const Teams = new TeamsController(ServiceTeams);
+
+    this.app.get('/teams', (req, res) => Teams.getAll(req, res));
+
+    // -----
   }
 
   public start(PORT: string | number):void {
