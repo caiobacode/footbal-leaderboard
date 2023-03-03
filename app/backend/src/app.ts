@@ -31,6 +31,7 @@ class App {
     const Teams = new TeamsController(ServiceTeams);
 
     this.app.get('/teams', (req, res) => Teams.getAll(req, res));
+    this.app.get('/teams/:id', (req, res) => Teams.getById(req, res));
 
     // -----
   }
