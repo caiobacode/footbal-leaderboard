@@ -1,6 +1,9 @@
 import * as express from 'express';
 import TeamsController from './controllers/TeamsController';
 import TeamsService from './services/TeamsService';
+import LoginController from './controllers/LoginController';
+import LoginService from './services/UsersService';
+import authLogin from './middlewares/authLogin';
 
 class App {
   public app: express.Express;
@@ -34,6 +37,11 @@ class App {
     this.app.get('/teams/:id', (req, res) => Teams.getById(req, res));
 
     // -----
+
+    // Users
+    const ServiceLogin = new LoginService();
+    const Login = new LoginController(ServiceLogin);
+    this.app.post('/login', authLogin.verifyInfo, (req, res) => Login.login(req, res));
   }
 
   public start(PORT: string | number):void {
