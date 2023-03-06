@@ -4,6 +4,7 @@ import TeamsService from './services/TeamsService';
 import LoginController from './controllers/LoginController';
 import LoginService from './services/UsersService';
 import authLogin from './middlewares/authLogin';
+import authToken from './middlewares/authToken';
 
 class App {
   public app: express.Express;
@@ -40,8 +41,10 @@ class App {
 
     // Users
     const ServiceLogin = new LoginService();
-    const ControllerLogin = new LoginController(ServiceLogin);
-    this.app.post('/login', authLogin.verifyInfo, (req, res) => ControllerLogin.login(req, res));
+    const Login = new LoginController(ServiceLogin);
+
+    this.app.post('/login', authLogin.verifyInfo, (req, res) => Login.login(req, res));
+    this.app.get('/login/role', authToken.verifyToken, (req, res) => Login.role(req, res));
   }
 
   public start(PORT: string | number):void {

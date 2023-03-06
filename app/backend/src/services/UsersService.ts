@@ -23,4 +23,10 @@ export default class LoginService implements IServiceLogin {
 
     return { type: 200, data: { token: generateToken(payload) } };
   }
+
+  async role(info: UserToken): Promise<{ type: number, data: string | object }> {
+    const user = await this.model.findByPk(info.id);
+    if (!user) return { type: 401, data: { message: 'Token must be a valid token' } };
+    return { type: 200, data: { role: user.dataValues.role } };
+  }
 }
