@@ -40,8 +40,8 @@ class App {
 
     // Users
     const ServiceLogin = new LoginService();
-    const Login = new LoginController(ServiceLogin);
-    this.app.post('/login', authLogin.verifyInfo, (req, res) => Login.login(req, res));
+    const ControllerLogin = new LoginController(ServiceLogin);
+    this.app.post('/login', authLogin.verifyInfo, (req, res) => ControllerLogin.login(req, res));
   }
 
   public start(PORT: string | number):void {

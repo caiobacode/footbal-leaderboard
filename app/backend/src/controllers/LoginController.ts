@@ -10,7 +10,7 @@ export default class LoginController {
 
   async login(req: Request, res: Response) {
     const info = req.body;
-    const token = await this._usersService.login(info);
-    res.status(200).json({ token });
+    const { type, data } = await this._usersService.login(info);
+    res.status(type).json(data);
   }
 }

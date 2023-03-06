@@ -4,5 +4,5 @@ export interface IUsersInfo {
 }
 
 export interface IServiceLogin {
-  login(info: IUsersInfo): Promise<string>;
+  login(info: IUsersInfo): Promise<{ type: number, data: string | object }>;
 }
