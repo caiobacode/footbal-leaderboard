@@ -1,10 +1,6 @@
 import * as express from 'express';
-import TeamsController from './controllers/TeamsController';
-import TeamsService from './services/TeamsService';
-import LoginController from './controllers/LoginController';
-import LoginService from './services/UsersService';
-import authLogin from './middlewares/authLogin';
-import authToken from './middlewares/authToken';
+import teamsRouter from './routes/TeamsRoute';
+import loginRouter from './routes/LoginRoute';
 
 class App {
   public app: express.Express;
@@ -28,23 +24,8 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
-    this.app.get('/teste', (req, res) => res.json({ oi: 'tchau' }));
-
-    // Teams
-    const ServiceTeams = new TeamsService();
-    const Teams = new TeamsController(ServiceTeams);
-
-    this.app.get('/teams', (req, res) => Teams.getAll(req, res));
-    this.app.get('/teams/:id', (req, res) => Teams.getById(req, res));
-
-    // -----
-
-    // Users
-    const ServiceLogin = new LoginService();
-    const Login = new LoginController(ServiceLogin);
-
-    this.app.post('/login', authLogin.verifyInfo, (req, res) => Login.login(req, res));
-    this.app.get('/login/role', authToken.verifyToken, (req, res) => Login.role(req, res));
+    this.app.use(teamsRouter);
+    this.app.use(loginRouter);
   }
 
   public start(PORT: string | number):void {
