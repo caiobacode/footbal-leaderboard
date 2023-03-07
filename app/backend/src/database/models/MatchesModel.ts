@@ -1,5 +1,6 @@
 import { BOOLEAN, Model, INTEGER } from 'sequelize';
 import db from '.';
+import Teams from './TeamsModel';
 
 class Matches extends Model {
   declare id: number;
@@ -20,6 +21,11 @@ Matches.init({
   homeTeamId: {
     allowNull: false,
     type: INTEGER,
+    field: 'home_team_id',
+    references: {
+      model: 'teams',
+      key: 'id',
+    },
   },
   homeTeamGoals: {
     allowNull: false,
@@ -28,6 +34,11 @@ Matches.init({
   awayTeamId: {
     allowNull: false,
     type: INTEGER,
+    field: 'away_team_id',
+    references: {
+      model: 'teams',
+      key: 'id',
+    },
   },
   awayTeamGoals: {
     allowNull: false,
@@ -43,5 +54,10 @@ Matches.init({
   underscored: true,
   timestamps: false,
 });
+
+Matches.belongsTo(Teams, { foreignKey: 'homeTeamId', as: 'homeTeam' });
+Matches.belongsTo(Teams, { foreignKey: 'awayTeamId', as: 'awayTeam' });
+Teams.hasMany(Matches, { foreignKey: 'homeTeamId', as: 'homeTeam' });
+Teams.hasMany(Matches, { foreignKey: 'awayTeamId', as: 'awayTeam' });
 
 export default Matches;
