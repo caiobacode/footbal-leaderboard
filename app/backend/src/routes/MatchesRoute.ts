@@ -25,4 +25,10 @@ matchesRouter.patch(
   (req, res) => Matches.updateMatch(req, res),
 );
 
+matchesRouter.post(
+  '/matches',
+  authToken.verifyToken,
+  (req, res) => Matches.createMatch(req, res),
+);
+
 export default matchesRouter;
