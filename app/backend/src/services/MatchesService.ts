@@ -15,4 +15,15 @@ export default class MatchesService implements IServiceMatches {
     });
     return allMatches;
   }
+
+  async getByQuery(inProgress: string): Promise<IMatch[]> {
+    const matchesFiltered = this.model.findAll({
+      where: { inProgress: inProgress === 'true' },
+      include: [
+        { model: Teams, as: 'homeTeam', attributes: { exclude: ['id'] } },
+        { model: Teams, as: 'awayTeam', attributes: { exclude: ['id'] } },
+      ],
+    });
+    return matchesFiltered;
+  }
 }
