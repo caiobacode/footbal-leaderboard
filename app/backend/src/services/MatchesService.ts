@@ -1,4 +1,4 @@
-import { ModelStatic } from 'sequelize';
+import { ModelStatic, Op } from 'sequelize';
 import ICreateMatch from '../interfaces/ICreateMatch';
 import IServiceMatches from '../interfaces/IServiceMatches';
 import Teams from '../database/models/TeamsModel';
@@ -7,6 +7,8 @@ import Matches from '../database/models/MatchesModel';
 
 export default class MatchesService implements IServiceMatches {
   protected model: ModelStatic<Matches> = Matches;
+  protected teamsModel: ModelStatic<Teams> = Teams;
+
   async getAll(): Promise<IMatch[]> {
     const allMatches = this.model.findAll({
       include: [
@@ -39,15 +41,15 @@ export default class MatchesService implements IServiceMatches {
   }
 
   async createMatch(info: ICreateMatch) {
-    const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = info;
-    const newMatch = await this.model.create({
-      homeTeamId,
-      awayTeamId,
-      homeTeamGoals,
-      awayTeamGoals,
-      inProgress: true,
-    });
-    console.log(newMatch);
+    const homeid = info.homeTeamId;
+    const awayId = info.awayTeamId;
+
+    const teams = await this.teamsModel.findAll({ where: { id: { [Op.or]: [homeid, awayId] } } });
+    const notFoundMessage = { message: 'There is no team with such id!' };
+
+    if (teams.length < 2) return { type: 404, data: notFoundMessage };
+
+    const newMatch = await this.model.create({ ...info, inProgress: true });
     return { type: 201, data: newMatch };
   }
 }

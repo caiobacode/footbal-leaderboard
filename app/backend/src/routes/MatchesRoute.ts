@@ -2,6 +2,7 @@ import { Router } from 'express';
 import MatchesController from '../controllers/MatchesController';
 import MatchesService from '../services/MatchesService';
 import authToken from '../middlewares/authToken';
+import authMatches from '../middlewares/authMatches';
 
 const matchesRouter = Router();
 
@@ -28,6 +29,7 @@ matchesRouter.patch(
 matchesRouter.post(
   '/matches',
   authToken.verifyToken,
+  authMatches.verifyInfo,
   (req, res) => Matches.createMatch(req, res),
 );
 
