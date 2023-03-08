@@ -34,6 +34,6 @@ export default class MatchesService implements IServiceMatches {
 
   async updateMatch(homeTeamGoals: number, awayTeamGoals: number, id: number) {
     await this.model.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
-    return { message: 'finished' };
+    return { message: 'match updated' };
   }
 }
