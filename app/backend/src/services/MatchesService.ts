@@ -26,4 +26,9 @@ export default class MatchesService implements IServiceMatches {
     });
     return matchesFiltered;
   }
+
+  async finishMatch(id: number) {
+    await this.model.update({ inProgress: false }, { where: { id } });
+    return { type: 200, data: { message: 'finished' } };
+  }
 }

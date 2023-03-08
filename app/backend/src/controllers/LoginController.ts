@@ -18,7 +18,6 @@ export default class LoginController {
 
   async role(req: IRequest | IRequest, res: Response) {
     const info: UserToken | undefined = req.user;
-    console.log(req.user);
     const { type, data } = await this._usersService.role(info);
     res.status(type).json(data);
   }
