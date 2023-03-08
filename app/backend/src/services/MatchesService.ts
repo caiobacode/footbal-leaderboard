@@ -41,13 +41,10 @@ export default class MatchesService implements IServiceMatches {
   }
 
   async createMatch(info: ICreateMatch) {
-    const homeid = info.homeTeamId;
-    const awayId = info.awayTeamId;
-
-    const teams = await this.teamsModel.findAll({ where: { id: { [Op.or]: [homeid, awayId] } } });
-    const notFoundMessage = { message: 'There is no team with such id!' };
-
-    if (teams.length < 2) return { type: 404, data: notFoundMessage };
+    const teams = await this.teamsModel.findAll({
+      where: { id: { [Op.or]: [info.homeTeamId, info.awayTeamId] } },
+    });
+    if (teams.length < 2) return { type: 404, data: { message: 'There is no team with such id!' } };
 
     const newMatch = await this.model.create({ ...info, inProgress: true });
     return { type: 201, data: newMatch };
