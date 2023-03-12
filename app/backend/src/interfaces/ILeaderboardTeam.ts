@@ -7,6 +7,6 @@ export default interface ILeaderboardTeam {
   totalLosses: number,
   goalsFavor: number,
   goalsOwn: number,
-  goalsBalance: number,
-  efficiency: string,
+  goalsBalance?: number,
+  efficiency?: string,
 }
