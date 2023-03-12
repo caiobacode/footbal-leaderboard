@@ -16,6 +16,9 @@ export default class LeaderBoardService implements IServiceLeaderBoard {
     const newTeams = getTeamsPropeties(allTeams, allMatches);
 
     const orderedTeams = newTeams.sort((a, b) => {
+      if (a.totalPoints === b.totalPoints && a.goalsBalance === b.goalsBalance) {
+        return a.goalsFavor < b.goalsFavor ? 1 : -1;
+      }
       if (a.totalPoints === b.totalPoints) {
         if (a.goalsBalance === b.goalsBalance) return 0;
         return a.goalsBalance < b.goalsBalance ? 1 : -1;

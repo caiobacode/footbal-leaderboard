@@ -1,5 +1,6 @@
 import IMatch from '../interfaces/IMatch';
 import ITeam from '../interfaces/ITeam';
+import IResults from '../interfaces/IResults';
 
 function getTeamGoals(id: number | undefined, matches: Array<IMatch>) {
   let favorGoals = 0;
@@ -11,6 +12,16 @@ function getTeamGoals(id: number | undefined, matches: Array<IMatch>) {
     }
   });
   return { favorGoals, ownGoals };
+}
+
+function getEfficiency(results: IResults) {
+  if (results.gamesPlayed === results.victories) return '100.00';
+
+  const victoryValue = 100.00 / results.gamesPlayed;
+  const drawValue = victoryValue / 3;
+  const totalValue = (victoryValue * results.victories) + drawValue * results.draws;
+
+  return (totalValue).toFixed(2);
 }
 
 function getMatchesResults(id: number | undefined, matches: Array<IMatch>) {
@@ -45,6 +56,7 @@ export default function getTeamsPropeties(teams: Array<ITeam>, matches: Array<IM
       goalsFavor: goals.favorGoals,
       goalsOwn: goals.ownGoals,
       goalsBalance: goals.favorGoals - goals.ownGoals,
+      efficiency: getEfficiency(gamesResults),
     };
 
     return completeTeam;

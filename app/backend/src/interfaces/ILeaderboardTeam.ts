@@ -8,5 +8,5 @@ export default interface ILeaderboardTeam {
   goalsFavor: number,
   goalsOwn: number,
   goalsBalance?: number,
-  efficiency?: string,
+  efficiency?: string | number,
 }
