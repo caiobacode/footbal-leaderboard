@@ -7,6 +7,7 @@ const leaderboardRouter = Router();
 const ServiceLeaderboard = new LeaderBoardService();
 const leaderboard = new LeaderBoardController(ServiceLeaderboard);
 
-leaderboardRouter.get('/leaderboard/home', (req, res) => leaderboard.getAll(req, res));
+leaderboardRouter.get('/leaderboard/home', (req, res) => leaderboard.getAll(req, res, 'home'));
+leaderboardRouter.get('/leaderboard/away', (req, res) => leaderboard.getAll(req, res, 'away'));
 
 export default leaderboardRouter;

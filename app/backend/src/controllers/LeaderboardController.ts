@@ -8,8 +8,8 @@ export default class LeaderBoardController {
     this._leaderboardService = leaderboard;
   }
 
-  async getAll(req: Request, res: Response) {
-    const orderedTeams = await this._leaderboardService.getAll();
+  async getAll(req: Request, res: Response, homeOrAway: string) {
+    const orderedTeams = await this._leaderboardService.getAll(homeOrAway);
     res.status(200).json(orderedTeams);
   }
 }
