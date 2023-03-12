@@ -1,6 +1,7 @@
 import IMatch from '../interfaces/IMatch';
+import ITeam from '../interfaces/ITeam';
 
-function getGoals(id: number, matches: Array<IMatch>) {
+function getTeamGoals(id: number | undefined, matches: Array<IMatch>) {
   let favorGoals = 0;
   let ownGoals = 0;
   matches.forEach((m: IMatch) => {
@@ -12,7 +13,7 @@ function getGoals(id: number, matches: Array<IMatch>) {
   return { favorGoals, ownGoals };
 }
 
-function getMatchesResults(id: number, matches: Array<IMatch>) {
+function getMatchesResults(id: number | undefined, matches: Array<IMatch>) {
   let gamesPlayed = 0;
   let victories = 0;
   let draws = 0;
@@ -20,6 +21,7 @@ function getMatchesResults(id: number, matches: Array<IMatch>) {
   matches.forEach((m: IMatch) => {
     if (m.homeTeamId === id) {
       gamesPlayed += 1;
+
       if (m.homeTeamGoals > m.awayTeamGoals) victories += 1;
       if (m.homeTeamGoals < m.awayTeamGoals) loses += 1;
       if (m.homeTeamGoals === m.awayTeamGoals) draws += 1;
@@ -28,14 +30,13 @@ function getMatchesResults(id: number, matches: Array<IMatch>) {
   return { gamesPlayed, victories, draws, loses };
 }
 
-export default function orderTable(teams: Array<any>, matches: Array<any>) {
-  const newMatches = matches.map((m) => { const newM = m.dataValues; return newM; });
+export default function getTeamsPropeties(teams: Array<ITeam>, matches: Array<IMatch>) {
   const newCompleteTeams = teams.map((t) => {
-    const newT = t.dataValues;
-    const goals = getGoals(newT.id, newMatches);
-    const gamesResults = getMatchesResults(newT.id, newMatches);
+    const goals = getTeamGoals(t.id, matches);
+    const gamesResults = getMatchesResults(t.id, matches);
+
     const completeTeam = {
-      name: newT.teamName,
+      name: t.teamName,
       totalPoints: (gamesResults.victories * 3) + gamesResults.draws,
       totalGames: gamesResults.gamesPlayed,
       totalVictories: gamesResults.victories,
@@ -43,7 +44,9 @@ export default function orderTable(teams: Array<any>, matches: Array<any>) {
       totalLosses: gamesResults.loses,
       goalsFavor: goals.favorGoals,
       goalsOwn: goals.ownGoals,
+      goalsBalance: goals.favorGoals - goals.ownGoals,
     };
+
     return completeTeam;
   });
   return newCompleteTeams;
