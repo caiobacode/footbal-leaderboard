@@ -4,7 +4,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import TeamsModel from '../database/models/TeamsModel';
+import Teams from '../database/models/TeamsModel';
 import { allTeamsMock, oneTeamMock } from './mocks';
 
 chai.use(chaiHttp);
@@ -13,7 +13,7 @@ const { expect } = chai;
 
 describe('Teams test', function () {
   it('endpoint GET "/teams"', async function () {
-    sinon.stub(TeamsModel, 'findAll').resolves(allTeamsMock as TeamsModel[]);
+    sinon.stub(Teams, 'findAll').resolves(allTeamsMock as Teams[]);
     
     const chaiResponse = await chai.request(app).get('/teams');
 
@@ -22,7 +22,7 @@ describe('Teams test', function () {
   });
 
   it('endpoint GET "/teams/:id"', async function () {
-    sinon.stub(TeamsModel, 'findByPk').resolves(oneTeamMock as TeamsModel);
+    sinon.stub(Teams, 'findByPk').resolves(oneTeamMock as Teams);
 
     const chaiResponse = await chai.request(app).get('/teams/12');
 
