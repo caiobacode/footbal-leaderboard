@@ -7,11 +7,11 @@ function getTeamGoals(id: number | undefined, matches: Array<IMatch>, type: stri
   let favorGoals = 0;
   let ownGoals = 0;
   matches.forEach((m: IMatch) => {
-    if (m.homeTeamId === id && type === 'home') {
+    if (m.homeTeamId === id && type !== 'away') {
       favorGoals += m.homeTeamGoals;
       ownGoals += m.awayTeamGoals;
     }
-    if (m.awayTeamId === id && type === 'away') {
+    if (m.awayTeamId === id && type !== 'home') {
       favorGoals += m.awayTeamGoals;
       ownGoals += m.homeTeamGoals;
     }

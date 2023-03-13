@@ -32,9 +32,21 @@ function getAwayResults(id: number | undefined, matches: Array<IMatch>) {
   return { gamesPlayed, victories, draws, loses };
 }
 
+function getHomeAndAwayResults(id: number | undefined, matches: Array<IMatch>) {
+  const homeResults = getHomeResults(id, matches);
+  const awayResults = getAwayResults(id, matches);
+  return {
+    gamesPlayed: homeResults.gamesPlayed + awayResults.gamesPlayed,
+    victories: homeResults.victories + awayResults.victories,
+    draws: homeResults.draws + awayResults.draws,
+    loses: homeResults.loses + awayResults.loses,
+  };
+}
+
 function getMatchesResults(id: number | undefined, matches: Array<IMatch>, homeOrAway: string) {
   if (homeOrAway === 'home') return getHomeResults(id, matches);
-  return getAwayResults(id, matches);
+  if (homeOrAway === 'away') return getAwayResults(id, matches);
+  return getHomeAndAwayResults(id, matches);
 }
 
 export default getMatchesResults;
