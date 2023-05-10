@@ -5,7 +5,7 @@
 </div>
 
 ## Description
-<p>building</p>
+<p>In this project, i have to create the backend for a football leaderboard. The front end has already been completed, and i had to develop the API according to its requirements and business rules.</p>
 
 ## 💻 Tecnologies used
 > [![Typescript][Typescript]][Typescript-url]
@@ -20,6 +20,7 @@
 ## 🛠️ Instructions
 
 ### Notes
+>I just do the backend of the aplication.<br/>
 >The frontend run in port 3000.<br/>
 >The backend run in port 3001.<br/>
 
@@ -51,7 +52,7 @@ npm run db:reset
 ```
 </details>
 
-### <strong>🧪 Test the Back End</strong>
+#### <strong>🧪 Test the Back End</strong>
 
 ```bash
 # enter in backend folder
@@ -90,15 +91,14 @@ npm run test
 
 </details>
 
-  <!-- <details>
+  <details>
     <summary><strong>✏️ What i learned</strong></summary>
 
-+ Object-Oriented APIs
-+ ODM (Object-Document Mapping)
-+ NoSQL database
-+ How to do database queries using mongoose
++ OOP (Object-Oriented-Programing) in typescript.
++ How to develop backend for a finished front end.
++ How to run a full stack aplication with docker.
   
-  </details> -->
+  </details>
 
 
 [Typescript]: https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
