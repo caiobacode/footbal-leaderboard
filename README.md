@@ -30,8 +30,7 @@
 - Docker
 
 
-<details>
-    <summary><strong>🐳 Run with Docker 🐳</strong></summary>
+#### <strong>🐳 Run with Docker 🐳</strong>
     
 ```bash
 # Clone the repo
@@ -50,7 +49,6 @@ npm run compose:up
 cd app/backend
 npm run db:reset
 ```
-</details>
 
 #### <strong>🧪 Test the Back End</strong>
 
